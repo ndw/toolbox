@@ -1,0 +1,24 @@
+grammar: tokens?, s, -nodefault, s, rule+rs, s .
+
+-s: -[' '; #a]* .
+-rs: -[' '; #a]+ .
+
+tokens: -'%token', s, tokenlist, s, -';' .
+-tokenlist: token, (-',', s, tokenlist)* .
+token: ['A'-'Z'; 'a'-'z'; '_']+ .
+
+-nodefault: -'%nodefault' .
+
+rule: nonterminal, s, -':', s, rhs .
+
+nonterminal: -token .
+
+rhs: (sequence ; choice), -';' .
+
+epsilon: {} .
+
+choice: (sequence)+-' | ' .
+
+sequence: (literal; token; epsilon), (' ', -sequence)* .
+
+literal: -"'", -token, -"'" .
