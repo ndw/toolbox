@@ -310,8 +310,23 @@ DPDY: "TK_JX", s, 'Z' .
 ```
 
 The comment at the top of the file is one possible input, as derived
-by the XSLT. In an effort to limit the size of the input and avoid
+by the XSLT. It can be used to test the grammar:
+
+```
+$ coffeepot -g:10.ixml "TK_SM||TK_ZT"
+I: Parse succeeded, 12 tokens in 0.00s (4000.0 tokens/sec)
+<root>TK_SM<NIXU/>TK_ZT</root>
+```
+
+In an effort to limit the size of the input and avoid
 loops, if an epsilon transition is possible, the XSLT chooses it.
 Otherwise, it chooses the first sequence.
 
 If there are loops, the XSLT will crash.
+
+### Conformance issues
+
+Many grammars in the corpus are “unhygienic”: they have unreachable
+and unproductive nonterminals. If your Invisible XML processor is
+unable to operate in a (noncoformant) mode which allows such things,
+only a subset of the grammars will be useful to you.
